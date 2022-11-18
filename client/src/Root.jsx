@@ -5,6 +5,7 @@ import { GrFormAdd } from "react-icons/gr";
 import { CiCircleRemove } from "react-icons/ci";
 import axios from "axios";
 import Folder from "./Folder";
+import Modal from "./Modal";
 
 const SidebarLink = styled.div`
   display: flex;
@@ -35,12 +36,12 @@ const DropdownLink = styled.div`
 `;
 
 const Root = () => {
-  const [subnav, setSubnav] = useState(false);
   const [data, setData] = useState();
+  const [subnav, setSubnav] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false)
+  const [refresh, setRefresh] = useState(false)
 
-  const showSubnav = () => {
-    setSubnav(!subnav);
-
+  function fetchData() {
     axios.get("http://localhost:9090/folder/all").then((response) => {
       if (response) {
         setData(response.data.filter((folder) => !folder.parentFolder));
@@ -48,6 +49,15 @@ const Root = () => {
         console.log("Failed to save Comment");
       }
     });
+  }
+
+  React.useEffect(()=>{
+    fetchData()
+    setRefresh(false)
+  },[refresh,subnav])
+
+  const showSubnav = () => {
+    setSubnav(!subnav);
     console.log(data);
   };
   return (
@@ -57,17 +67,12 @@ const Root = () => {
           {!subnav ? <IoMdArrowDropright /> : <IoMdArrowDropdown />}
           <SidebarLabel>Root</SidebarLabel>
         </div>
-        <div
-          style={{
-            dispaly: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
+        <div onClick={()=>setModalOpen(true)}>
           <GrFormAdd />
           New
         </div>
       </SidebarLink>
+      {modalOpen && <Modal setModalOpen={setModalOpen} setRefresh={setRefresh} />}
       {(subnav && data?.length) && data.map((item, index) => {
         return <Folder key ={index} item={item} />
       })}
