@@ -24,7 +24,7 @@ router.delete('/delete', async(req, res) => {
         await folder.deleteOne();
         res.status(200).json("Folder Deleted Successfully!")
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json({message: error.message})
     }
 })
 
@@ -34,6 +34,17 @@ router.delete('/delete', async(req, res) => {
 router.get('/all', async(req, res) => {
     try {
         const folder = await FolderModel.find()
+        res.status(200).json(folder)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+// Getting Sub Folder
+
+router.get('/sub', async(req, res)=> {
+    try {
+        const folder = await FolderModel.find(req.body)
         res.status(200).json(folder)
     } catch (error) {
         res.status(500).json({message: error.message})
