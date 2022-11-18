@@ -1,9 +1,10 @@
 import './App.css';
+import Root from './Root';
 
 const App = () => {
   return (
     <div className="App">
-      Working Fine
+      <Root />
     </div>
   );
 }
