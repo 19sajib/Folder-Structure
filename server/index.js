@@ -4,6 +4,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
+const FolderRoute = require('./Route/Folder')
+
 const app = express();
 dotenv.config();
 
@@ -25,3 +27,8 @@ mongoose.connect(process.env.MONGO_URI, {
     if(err) return console.log(err);
     console.log('MongoDB connected...')
    })
+
+
+// Route
+
+app.use('/folder', FolderRoute)
