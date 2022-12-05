@@ -34,7 +34,7 @@ const Folder = ({ item }) => {
     const body = {
       parentFolder: item._id
   }
-  axios.post("http://localhost:9090/folder/sub", body).then((response) => {
+  axios.post("https://folder-structure-one.vercel.app/folder/sub", body).then((response) => {
     if (response) {
       setSubData(response.data);
       console.log(response.data)

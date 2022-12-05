@@ -42,7 +42,7 @@ const Root = () => {
   const [refresh, setRefresh] = useState(false)
 
   function fetchData() {
-    axios.get("http://localhost:9090/folder/all").then((response) => {
+    axios.get("https://folder-structure-one.vercel.app/folder/all").then((response) => {
       if (response) {
         setData(response.data.filter((folder) => !folder.parentFolder));
       } else {

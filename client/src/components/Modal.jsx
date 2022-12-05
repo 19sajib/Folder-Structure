@@ -44,7 +44,7 @@ const Modal = ({item, setModalOpen, actionType, setRefresh}) => {
       folderName: folderName,
       ...(item) && {parentFolder: item._id}
     }
-    axios.post("http://localhost:9090/folder/create", body).then((response) => {
+    axios.post("https://folder-structure-one.vercel.app/folder/create", body).then((response) => {
       if (response) {
         console.log(response.data)
         setRefresh(true)
@@ -56,7 +56,7 @@ const Modal = ({item, setModalOpen, actionType, setRefresh}) => {
   }
 
   const deleteFolder = () => {
-    axios.delete("http://localhost:9090/folder/delete",{ data: {
+    axios.delete("https://folder-structure-one.vercel.app/folder/delete",{ data: {
       _id: item._id
     }}).then((response) => {
       if (response) {
